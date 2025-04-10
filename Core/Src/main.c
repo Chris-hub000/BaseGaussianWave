@@ -66,10 +66,10 @@ void SystemClock_Config(void);
 
 //增加突变
 #define PROB_MUTATION 0.4f  //概率
-#define MAX_SHIFT NUM_POINTS/4.0f  //100.0f
+#define MAX_SHIFT   30     //NUM_POINTS/4.0f  //100.0f
 #define MAX_INTENSITY 0.5f
-#define SIGMA_1 NUM_POINTS/10.0f  //10.0f
-#define SIGMA_2 NUM_POINTS/12.0f  //80.0f
+#define SIGMA_1 10         //NUM_POINTS/20.0f  //10.0f
+#define SIGMA_2 5          //NUM_POINTS/25.0f  //80.0f
 
 //#define AMPLITUDE 300.0f
 //#define MEAN 200.0f
@@ -102,7 +102,7 @@ float gaussian_waveform_2[NUM_POINTS];
 
 
 
-
+//背景噪声
 float Generate_Gaussian_Noise(float sigma)
 {
     // 使用 Box-Muller 变换生成高斯噪声
@@ -151,14 +151,11 @@ void Generate_Gaussian_With_Mutation(void)
 //	
 	
 	
-    float mean1 = NUM_POINTS/2.0f ;  //主高斯波形均值
-    float amplitude1 = 300.0f;
+    float mean1 = 100.0f ;  //主高斯波形均值
+    float amplitude1 = 100.0f;
 
 	
 			
-//		float shift = ((float)rand() / (float)RAND_MAX) * MAX_SHIFT - (MAX_SHIFT / 2.0f);  // 偏移位置
-	//		float amplitude2 = amplitude1 * (((float)rand() / (float)RAND_MAX) * MAX_INTENSITY);  // 第二个高斯强度
-//		float mean2 = mean1 + shift;  // 第二个高斯的中心
 
 //		// 生成双峰叠加波形
 //		for (int i = 0; i < NUM_POINTS; i++)
@@ -179,9 +176,7 @@ void Generate_Gaussian_With_Mutation(void)
 		
     // 随机决定是否发生突变（多峰）
 			float shift = ((float)rand() / (float)RAND_MAX) * MAX_SHIFT - (MAX_SHIFT / 2.0f);  // 偏移位置
-			if (fabsf(shift) < 0.3f * SIGMA_1) {
-				shift = (shift > 0 ? 1 : -1) * 0.5f * SIGMA_1;
-			}
+			
 			if ((float)rand() / (float)RAND_MAX < PROB_MUTATION)
 			{
 			
@@ -310,14 +305,9 @@ int main(void)
 		//启动定时器中断
 	HAL_TIM_Base_Start_IT(&htim2);
 	
-//	float data = 0.0;
-//	float data1 = 0.0;
-//	float data2 = 0.0;
+
 //	uint8_t buf[10] = "10,20\r\n";
-//	float x_min = -3.0; // x 的最小步
-//  float x_max = 3.0;  // x 的最大步
-//  float step = (x_max - x_min) / (NUM_POINTS - 1); // x 的步
-//	uint32_t data_1 = 1234;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -328,11 +318,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 //		m_printf(&buf[0],strlen((char *)buf));
-//		data += 0.1f;
-//		if(data >= 6.28f) data = 0;
-//		data1 = sinf(data+2.09f);
-//		data2 = sinf(data-2.09f);
-//		Send_Data_To_Vofa(data1 , data2 );
+
 		
 		//直接生成高斯波形，会有数据出
 //		for (int i = 0; i < NUM_POINTS; i++) {

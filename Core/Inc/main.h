@@ -39,7 +39,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-#define NUM_POINTS 1000  //高斯波形的点数
+#define NUM_POINTS 200  //高斯波形的点数
 
 extern float gaussian_waveform[NUM_POINTS];
 extern float gaussian_waveform_2[NUM_POINTS];
